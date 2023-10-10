@@ -7,6 +7,7 @@ function ProductForm() {
     productPrice: 0,
     productImage: '',
     description: '',
+    productQuantity:1
   });
 
   const handleChange = (e) => {
@@ -68,6 +69,17 @@ console.log(formData)
             id="description"
             name="description"
             value={formData.description}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="productQuantity">productQuantity</label>
+          <input
+            type='number'
+            className="form-control"
+            id="productQuantity"
+            name="productQuantity"
+            value={formData.productQuantity}
             onChange={handleChange}
           />
         </div>

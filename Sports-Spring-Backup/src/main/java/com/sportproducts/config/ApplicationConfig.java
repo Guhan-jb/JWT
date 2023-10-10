@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
+    
 
     @Bean
     public UserDetailsService userDetailsService() {

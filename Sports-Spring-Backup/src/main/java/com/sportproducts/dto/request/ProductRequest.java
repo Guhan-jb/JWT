@@ -12,5 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProductRequest {
     private String productName;
     private float productPrice;
+    private String productImage;
     private String description;
+    private long productQuantity;
 }

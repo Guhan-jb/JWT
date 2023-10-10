@@ -1,10 +1,12 @@
-package com.sportproducts.Service;
+   package com.sportproducts.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+
 import com.sportproducts.dto.request.ProductRequest;
+import com.sportproducts.dto.response.CountResponse;
 import com.sportproducts.dto.response.ProductResponse;
 import com.sportproducts.model.Products;
 import com.sportproducts.repository.ProductsRepository;
@@ -20,7 +22,8 @@ public class ProductService {
 
     private final ProductsRepository productRepository;
 
-    
+
+   
     public boolean saveProduct(ProductRequest request) {
         if (productRepository.findByProductName(request.getProductName()).isPresent()) {
             return false;
@@ -29,15 +32,15 @@ public class ProductService {
         Products product = Products.builder()
                 .productName(request.getProductName())
                 .productPrice(request.getProductPrice())
+                .productQuantity(request.getProductQuantity())
                 .description(request.getDescription())
-                .productImage(request.getProductName())
+                .productImage(request.getProductImage())
                 .build();
 
         productRepository.save(product);
         return true;
     }
 
-    
     public List<ProductResponse> getAllProducts() {
         List<Products> productList = productRepository.findAll();
 
@@ -59,10 +62,9 @@ public class ProductService {
         if (product != null) {
             product.setProductName(request.getProductName());
             product.setProductPrice(request.getProductPrice());
+            product.setProductQuantity(request.getProductQuantity());
             product.setDescription(request.getDescription());
-            product.setProductImage(request.getProductName());
-           
-
+            product.setProductImage(request.getProductImage());
             productRepository.save(product);
 
             return mapProductToResponse(product);
@@ -71,7 +73,7 @@ public class ProductService {
         }
     }
 
-    
+
     public boolean deleteProduct(Long pid) {
         Products product = productRepository.findByPid(pid);
 
@@ -88,13 +90,20 @@ public class ProductService {
                 .pid(product.getPid())
                 .productName(product.getProductName())
                 .productPrice(product.getProductPrice())
+                .productQuantity(product.getProductQuantity())
                 .description(product.getDescription())
-                .productName(product.getProductImage())
+                .productImage(product.getProductImage())
                 .build();
     }
 
     
     public Products getProductModelId(Long pid) {
         return productRepository.findByPid(pid);
+    }
+
+    
+    public CountResponse productCount() {
+        long count = productRepository.count();
+        return CountResponse.builder().count(count).build();
     }
 }

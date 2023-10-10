@@ -47,8 +47,9 @@ public class UserService {
             userRepository.save(newUser);
         }
         return mapUserToUserResponse(newUser);
+
+        
     }
-    
 
     private UserResponse mapUserToUserResponse(User user) {
         return UserResponse.builder()

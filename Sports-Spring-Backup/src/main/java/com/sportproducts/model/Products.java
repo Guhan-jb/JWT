@@ -1,5 +1,6 @@
 package com.sportproducts.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,11 +20,12 @@ import lombok.Setter;
 @Table(name = "products")
 public class Products {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long pid;
 	private String productName;
 	private float productPrice;
 	private String description;
 	private String productImage;
-	private String productFeedback;
+	@Column(nullable = false)
+    private long productQuantity;
 }

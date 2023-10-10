@@ -9,6 +9,7 @@ function EditProductForm() {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productImage, setProductImage] = useState('');
+  const [productQuantity, setProductQuantity] = useState('');
   const [description, setDescription] = useState('');
     const nav=useNavigate()
   useEffect(() => {
@@ -19,6 +20,7 @@ function EditProductForm() {
         setProductName(productData.productName);
         setProductPrice(productData.productPrice);
         setProductImage(productData.productImage);
+        setProductQuantity(productData.productQuantity);
         setDescription(productData.description);
       } catch (error) {
         console.error("Error fetching product", error);
@@ -28,7 +30,7 @@ function EditProductForm() {
     fetchData();
   }, [id]);
 
-  const formData = { productName, productPrice, productImage, description };
+  const formData = { productName, productPrice, productImage,productQuantity, description };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,6 +83,17 @@ function EditProductForm() {
             name="description"
             value={description}
             onChange={(e) => { setDescription(e.target.value) }}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="productImage">Product Quantity</label>
+          <input
+            type="number"
+            className="form-control"
+            id="productQuantity"
+            name="productQuantity"
+            value={productQuantity}
+            onChange={(e) => { setProductQuantity(e.target.value) }}
           />
         </div>
         <button type="submit" className="btn btn-primary">
