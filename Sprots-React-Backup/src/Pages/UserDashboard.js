@@ -1,9 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserbyId } from '../Service/Api';
+import { useState,useEffect } from 'react';
 const UserDashboard = () => {
   const uid=localStorage.getItem('uid')
-  const user=getUserbyId(uid)
+  const [user,setUser]=useState([]) 
+  useEffect(() => {
+    const fetchOrders = async () => {
+        try {
+            const response = await getUserbyId(localStorage.getItem('uid'));
+            setUser(response.data);
+        } catch (error) {
+            console.error("Error fetching user orders:", error);
+        }
+    }
+
+    fetchOrders();
+}, []);
+
   const nav=useNavigate()
   const handleCartbtn=()=>{
     nav("/cart")

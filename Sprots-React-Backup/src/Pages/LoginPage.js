@@ -7,12 +7,12 @@ import { login } from "../redux/userSlice";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import Loader from './Loader.js';
-import { userLogin,userRegister } from "../Service/Api";
+import { userLogin,userRegister,getUserbyId } from "../Service/Api";
 export default function Login() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setrole] = useState("");
+  const [role, setrole] = useState("customer");
   const [password, setPassword] = useState("");
   let [authMode, setAuthMode] = useState(true);
   const nav = useNavigate();
@@ -63,11 +63,15 @@ export default function Login() {
     localStorage.setItem('uid',getuid)
     console.log(cred)
     localStorage.setItem('Token',cred.data.token)
-    if(email==="admin@gmail.com")
+    const user=await getUserbyId(getuid)
+    console.log(user)
+    if(user.data.role==="ADMIN")
     {
       nav("/AdminDashBoard")
     }
+    else{
     nav("/user");
+    }
   }
     
   };

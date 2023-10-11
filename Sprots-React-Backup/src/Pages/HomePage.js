@@ -5,23 +5,33 @@ import '../Assets/CSS/PartnerLogoSlider.css';
 import PartnerLogosSlider from './PartnerLogosSlider'; // Import the PartnerLogosSlider component
 import Loader from './Loader'; // Import the Loader component
 import productsData from '../Components/productsList.json'; // Import your product data
-import { useSelector,useDispatch} from 'react-redux';
-import { selectUser } from '../redux/userSlice';
-import { addToCart } from '../redux/cartSlice';
 import {ToastContainer,toast} from 'react-toastify';
-import sportsProducts from '../Components/productsList.json';
+import { getProduct,addCart } from '../Service/Api';
 const HomePage = () => {
-  const Email = useSelector(selectUser);
-  const dispatch=useDispatch()
-  const addTocart = (pid) => {
-    const product = sportsProducts.find((p) => p.pid === pid);
-    if (Email.email) {
-      dispatch(addToCart(product)); // Dispatch addToCart with the product object
-      toast.success('Added to cart');
-    } else {
-      toast.error('Login to add item to cart');
+  const [sportsProducts,setSportsProducts]=useState([])
+  async function fetchData() {
+    try {
+      const productsData = await getProduct();
+      setSportsProducts(productsData.data);
+    } catch (error) {
+      console.error("Error fetching products", error);
     }
-  };
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const addTocart = async (pid) => {
+    const products = sportsProducts.find((p) => p.pid === pid);
+    const uid=localStorage.getItem('uid')
+    const orderAddress="Address"
+    const paymentMode="upi"
+    const quantity=1
+    const productIdQuantity=[{pid,quantity}]
+    const cart={orderAddress,paymentMode,uid,product:productIdQuantity}
+    console.log(cart)
+    await addCart(cart)
+  }
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const loaderTimeout = setTimeout(() => {

@@ -25,8 +25,9 @@ const userLogin = (signin) => axios.post(`${URI}/auth/login`, signin)
 const userRegister = (register) => axios.post(`${URI}/auth/signup`, register)
 const adminLogin = (signin) => axios.post(`${URI}/auth/login`, signin)
 
-const addOrder=(order)=> axios.post(`${URI}/order/add`,order,{headers})
-const getUserOrders = (id) =>axios.get(`${URI}/order/get/${id}`,{headers})
+const addCart=(order)=> axios.post(`${URI}/order/add`,order,{headers})
+const getCart = (id) =>axios.get(`${URI}/order/get/${id}`,{headers})
+const deleteCartItem = (id) =>axios.delete(`${URI}/order/delete/${id}`,{headers})
 
 const getUserCount = () => axios.get(`${URI}/user/getCount`, { headers })
 const getProductCount = () => axios.get(`${URI}/product/getCount`, { headers })
@@ -39,5 +40,5 @@ const deleteFeedback = (id) => axios.delete(`${URI}/feedback/delete/${id}`, { he
 const getFeedbacktCount = () => axios.get(`${URI}/feedback/getcount`, { headers })
 const addFeedback = (feedback) => axios.post(`${URI}/feedback/add`, feedback)
 
-export { getProduct, getProductbyId, addProduct, editProduct, deleteProduct, getProductCount, getFeedback, addFeedback, deleteFeedback, getFeedbacktCount, getUser, getUserbyId, editUser, deleteUser, getUserCount, adminLogin,userLogin,userRegister,addOrder,getUserOrders,getOrderCount }
+export { getProduct, getProductbyId, addProduct, editProduct, deleteProduct, getProductCount, getFeedback, addFeedback, deleteFeedback, getFeedbacktCount, getUser, getUserbyId, editUser, deleteUser, getUserCount, adminLogin,userLogin,userRegister,addCart,getCart,getOrderCount,deleteCartItem }
 

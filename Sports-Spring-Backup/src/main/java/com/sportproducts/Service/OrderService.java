@@ -3,6 +3,7 @@ package com.sportproducts.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import com.sportproducts.model.Order;
 import com.sportproducts.model.OrderMapping;
 import com.sportproducts.model.Products;
 import com.sportproducts.model.User;
+import com.sportproducts.repository.OrderMappingRepository;
 import com.sportproducts.repository.OrderRepository;
 import com.sportproducts.repository.ProductsRepository;
 import com.sportproducts.repository.UserRepository;
@@ -30,6 +32,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ProductsRepository productRepository;
     private final OrderRepository orderRepository;
+    private final OrderMappingRepository orderMappingRepository;
     private final ProductService productService;
 
     
@@ -156,6 +159,10 @@ public class OrderService {
     public CountResponse orderCount() {
         long count = orderRepository.count();
         return CountResponse.builder().count(count).build();
+    }
+    public boolean deleteOrder(Long orderId) {
+        orderMappingRepository.deleteById(orderId);
+        return true;
     }
 
 }

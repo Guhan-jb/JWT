@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { addProduct } from '../Service/Api';
+import { toast,ToastContainer } from 'react-toastify';
 function ProductForm() {
   const [formData, setFormData] = useState({
     productName: '',
     productPrice: 0,
     productImage: '',
     description: '',
-    productQuantity:1
+    productQuantity:10000
   });
 
   const handleChange = (e) => {
@@ -22,7 +23,7 @@ console.log(formData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   await addProduct(formData)
+   await addProduct(formData).then(toast.success("added successfully"))
   };
 
   return (
@@ -87,6 +88,18 @@ console.log(formData)
           Submit
         </button>
       </form>
+      <ToastContainer
+          position="bottom-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
     </div>
   );
 }
